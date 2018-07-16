@@ -1,12 +1,17 @@
-import urllib.request from bs4 import BeautifulSoup import re
+import urllib.request
+from bs4 import BeautifulSoup
+import re
 
 def get_sub_url(super_url):
     response = urllib.request.urlopen(super_url)
-    html = response.read() html = html.decode("gbk") # 解码操作 soup = BeautifulSoup(html, 'lxml') return soup.find_all("a", text=re.compile("第"))
+    html = response.read()
+    html = html.decode("gbk") # 解码操作
+    soup = BeautifulSoup(html, 'lxml')
+    return soup.find_all("a", text=re.compile("第"))
 
 def delete_news(times, links):
     for index in range(0, times + 1): del links[0]
-return links
+    return links
 
 def get_sub_content(detail_url):
     response = urllib.request.urlopen(detail_url)
@@ -18,7 +23,8 @@ def get_sub_content(detail_url):
     content = re.compile('').sub("", str(content)) # 把网页的替换成换行
     content = re.compile("'" + detail_url + "'").sub("", str(content))
     content = re.compile(detail_url).sub("", str(content))
-    content = re.compile('请记住本书首发域名：www.biqukan.com。笔趣阁手机版阅读网址：m.biqukan.com').sub("", str(content)) return str(content)
+    content = re.compile('请记住本书首发域名：www.biqukan.com。笔趣阁手机版阅读网址：m.biqukan.com').sub("", str(content))
+    return str(content)
 def write_txt( title_name, content):
     print(title_name)
     print("开始制作txt文档" + title_name)
@@ -38,7 +44,7 @@ def get_content(super_url, links):
         sub_content = get_sub_content(detail_url)
         write_txt(link.get_text(),sub_content)
 
-if name == 'main':
+if __name__ == 'main':
     home_url = "http://www.biqukan.com"
     book = "/1_1094"
     super_url = home_url + book

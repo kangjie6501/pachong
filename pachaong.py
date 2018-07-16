@@ -44,7 +44,7 @@ def get_content(super_url, links):
         sub_content = get_sub_content(detail_url)
         write_txt(link.get_text(),sub_content)
 
-if __name__ == 'main':
+if __name__ == '__main__':
     home_url = "http://www.biqukan.com"
     book = "/1_1094"
     super_url = home_url + book
